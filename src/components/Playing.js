@@ -14,6 +14,9 @@ const words = [
   "kiwi",
   "lemon",
 ];
+const forbiddenWords = [
+  ['apple1'],
+];
 
 const Playing = () => {
   const navigate = useNavigate();
@@ -149,8 +152,8 @@ const Playing = () => {
 
   return (
     <div className="container">
-      <header className="d-flex flex-wrap align-items-center justify-content-between py-3 mb-4 border-bottom">
-        <ul className="word-indice col-12 col-lg-auto my-2 my-md-0 nav text-small">
+      <header className="align-items-center d-flex flex-wrap justify-content-between py-3 mt-4">
+        <ul className="bg-white col-12 col-lg-auto my-2 my-md-0 nav p-2 rounded-5 shadow text-small word-indice">
           {words.map((word, index) => (
             <li
               key={index}
@@ -168,18 +171,51 @@ const Playing = () => {
           ))}
         </ul>
         
-        <div>
-          <span class="display-6">{formatTime(timeRemaining)}</span>
+        <div className="bg-white px-4 py-2 rounded-5 shadow">
+          <span className={`display-6 ${isPaused && 'opacity-25'}`}>{formatTime(timeRemaining)}</span>
         </div>
       </header>
 
-      <section className="py-5">
-      <div className="py-5 mx-auto text-center">
-        <div className="display-1 fw-normal text-body-emphasis">
-          {words[currentWordIndex]}
+
+      <section className="py-5 my-4 rounded-5 shadow bg-white">
+        <div className="py-5 mb-4 mx-auto text-center">
+          <div className="display-1 fw-semibold text-dark-emphasis">
+            {words[currentWordIndex]}
+          </div>
         </div>
-      </div>  
+        {
+          forbiddenWords[currentWordIndex] && forbiddenWords[currentWordIndex].length > 0 && (
+            <div className="bg-white col-6 offset-1 p-3">
+              <div className="fs-6 mb-2">FORBIDDEN WORDS</div>
+              <div className="fs-3">
+                {
+                  forbiddenWords[currentWordIndex].map((fbnWord, index) => (
+                    <div key={index} className="badge rounded-pill text-bg-danger me-2">{fbnWord}</div>
+                  ))
+                }
+              </div>
+            </div>
+          )
+        }
+
       </section>
+      <br/>
+      {/* <section>
+        {/* <div className="card col-6 offset-3 rounded-5 shadow">
+          <div className="card-header">Forbidden words</div>
+          <div className="card-body"></div>
+        </div> *
+        <div className="bg-white col-6 offset-3 p-3 rounded-4 shadow">
+          <div className="fs-6 mb-2">FORBIDDEN WORDS</div>
+          <div className="fs-4">
+
+            <div class="badge rounded-pill text-bg-danger me-2">Danger</div>
+            <div class="badge rounded-pill text-bg-danger me-2">Danger</div>
+            <div class="badge rounded-pill text-bg-danger me-2">Danger</div>
+
+          </div>
+        </div>
+      </section> */}
 
     </div>
   );

@@ -1,41 +1,19 @@
 @import url('bootstrap/dist/css/bootstrap.min.css');
 
-/* body {
+body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: rgb(250, 225, 89);
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
-
-.word-list {
-  display: flex;
-  list-style-type: none;
-  padding: 0;
-  margin: 10px 0;
-}
-
-.word-list-item {
-  flex: 1;
-  text-align: center;
-  font-size: 16px;
-  color: grey;
-}
-
-.word-list-item.guessed {
-  color: green;
-  font-weight: bold;
-}
-
-.word-list-item.current {
-  font-size: 20px;
-} */
 
 
 .word-indice .word-indice-item {
