@@ -10,29 +10,39 @@ const Playing = () => {
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
   const [score, setScore] = useState(0);
   const [timeRemaining, setTimeRemaining] = useState(20);
-  const [guessedWords, setGuessedWords] = useState(new Array(words.length).fill(false));
+  const [guessedWords, setGuessedWords] = useState(new Array(words.length).fill(undefined));
   const [timer, setTimer] = useState(null);
   const [isPaused, setIsPaused] = useState(false);
   const [isEnded, setIsEnded] = useState(false);
 
   const handleKeyPress = (event) => {
-    if (event.key === 'Enter') {
-      handleGuess(currentWordIndex, true);
-    } else if (event.key === 'Escape') {
-      handleGuess(currentWordIndex, false);
-    } else if (event.key === ' ') {
-      handlePause();
+    switch(event.key) {
+      case 'Enter':
+        handleGuess(currentWordIndex, true);
+        break;
+      case 'Escape':
+        handleGuess(currentWordIndex, false);
+        break;
+      case ' ':
+        handlePause();
+        break;
+      case 'ArrowRight':
+        goForward();
+        break;
+      case 'ArrowLeft':
+        goBack();
+        break;
+      default:
     }
   };
 
   const handleGuess = (index, isCorrect) => {
+    if (isCorrect && !guessedWords[index]) {
+      setScore((value) => value + 1);
+    }
     const updatedGuessedWords = [...guessedWords];
     updatedGuessedWords[index] = true;
     setGuessedWords(updatedGuessedWords);
-
-    if (isCorrect) {
-      setScore((value) => value + 1);
-    }
     goToNextWord();
     setIsPaused(false);
   };
@@ -42,12 +52,33 @@ const Playing = () => {
   };
 
   const goToNextWord = () => {
-    if (currentWordIndex < words.length - 1) {
-      setCurrentWordIndex((prevIndex) => prevIndex + 1);
-    } else {
-      setIsEnded(true);
+    const foundIndex = findNextWord();
+    if (foundIndex !== -1) {
+      setCurrentWordIndex(foundIndex);
+      return;
     }
+    setIsEnded(true);
   };
+
+  const findNextWord = () => {
+    const found = guessedWords.findIndex((status, index) => typeof status === 'undefined' && index > currentWordIndex);
+    if (found !== -1) {
+      return found;
+    }
+    return guessedWords.findIndex((status, index) => typeof status === 'undefined' && index < currentWordIndex);
+  }
+
+  const goForward = () => {
+    if (currentWordIndex < words.length - 1) {
+      setCurrentWordIndex(value => value + 1);
+    }
+  }
+
+  const goBack = () => {
+    if (currentWordIndex > 0) {
+      setCurrentWordIndex(value => value - 1);
+    }
+  }
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -74,7 +105,6 @@ const Playing = () => {
 
   useEffect(() => {
     if (timeRemaining === 0) {
-      // handleEndGame();
       setIsEnded(true);
     }
   }, [timeRemaining, timer]);

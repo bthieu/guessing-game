@@ -28,6 +28,7 @@ code {
 
 .word-list-item.guessed {
   color: green;
+  font-weight: bold;
 }
 
 .word-list-item.current {
