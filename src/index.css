@@ -11,3 +11,25 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.word-list {
+  display: flex;
+  list-style-type: none;
+  padding: 0;
+  margin: 10px 0;
+}
+
+.word-list-item {
+  flex: 1;
+  text-align: center;
+  font-size: 16px;
+  color: grey;
+}
+
+.word-list-item.guessed {
+  color: green;
+}
+
+.word-list-item.current {
+  font-size: 20px;
+}
