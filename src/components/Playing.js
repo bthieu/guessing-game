@@ -9,7 +9,7 @@ const Playing = () => {
   const navigate = useNavigate();
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
   const [score, setScore] = useState(0);
-  const [timeRemaining, setTimeRemaining] = useState(20);
+  const [timeRemaining, setTimeRemaining] = useState(1200);
   const [guessedWords, setGuessedWords] = useState(new Array(words.length).fill(undefined));
   const [timer, setTimer] = useState(null);
   const [isPaused, setIsPaused] = useState(false);
@@ -41,7 +41,7 @@ const Playing = () => {
       setScore((value) => value + 1);
     }
     const updatedGuessedWords = [...guessedWords];
-    updatedGuessedWords[index] = true;
+    updatedGuessedWords[index] = isCorrect;
     setGuessedWords(updatedGuessedWords);
     goToNextWord();
     setIsPaused(false);
@@ -78,6 +78,15 @@ const Playing = () => {
     if (currentWordIndex > 0) {
       setCurrentWordIndex(value => value - 1);
     }
+  }
+
+  const goTo = (index) => {
+    setCurrentWordIndex(index);
+  }
+
+  const getNavItemClasses = (status) => {
+    // return typeof status === 'undefined' ? 'btn-outline-secondary' : status ? 'btn-success' : 'btn-danger';
+    return status === false ? 'btn-danger' : status ? 'btn-success' : 'btn-outline-secondary';
   }
 
   useEffect(() => {
@@ -118,7 +127,29 @@ const Playing = () => {
   }, [currentWordIndex]); // Empty dependency array to run only once during component mounting
 
   return (
-    <div>
+    <div className="container">
+      <header className="d-flex flex-wrap align-items-center justify-content-center py-3 mb-4 border-bottom">
+      <ul className="word-indice col-12 col-lg-auto my-2 my-md-0 nav text-small">
+        {words.map((word, index) => (
+          <>
+          <li
+            key={index}
+            className={`btn rounded-circle p-2 lh-1 border-light-subtle border-3 opacity-50 ${getNavItemClasses(guessedWords[index])} ${
+              currentWordIndex === index ? 'border-dark-subtle opacity-100' : ''
+            }`}
+            onClick={() => goTo(index)}
+          >
+            <div className="word-indice-item">{index + 1}</div>
+          </li>
+          &nbsp;
+          </>
+        ))}
+      </ul>
+      </header>
+      
+      <div class="p-3 pb-md-4 mx-auto text-center">
+        <h1 class="display-4 fw-normal text-body-emphasis">{words[currentWordIndex]}</h1>
+      </div>
       <div>Score: {score}</div>
       <div>Time Remaining: {timeRemaining} seconds</div>
       <div>Word: {words[currentWordIndex]}</div>
@@ -134,6 +165,7 @@ const Playing = () => {
           </li>
         ))}
       </ul>
+      {JSON.stringify(guessedWords)}
     </div>
   );
 };
