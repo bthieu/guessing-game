@@ -1,0 +1,110 @@
+{
+    "0": [
+        {
+            "word": "Chrome"
+        }, 
+        {
+            "word": "var"
+        },
+        {
+            "word": "number",
+            "forbidden": ["số"]
+        },
+        {
+            "word": "Java"
+        },
+        {
+            "word": "Microsoft"
+        },
+        {
+            "word": "1995",
+            "forbidden": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
+        },
+        {
+            "word": "Compiler",
+            "forbidden": ["trình", "biên", "dịch"]
+        },
+        {
+            "word": "setTimeout",
+            "forbidden": ["đặt", "thời", "gian"]
+        },
+        {
+            "word": "ReactJS"
+        },
+        {
+            "word": "TC39"
+        }
+    ],
+    "1": [
+        {
+            "word": "Firefox"
+        }, 
+        {
+            "word": "let"
+        },
+        {
+            "word": "string",
+            "forbidden": ["chuỗi"]
+        },
+        {
+            "word": "OOP",
+            "forbidden": ["lập", "trình", "hướng", "đối", "tượng", "object", "oriented", "programming"]
+        },
+        {
+            "word": "Mozilla"
+        },
+        {
+            "word": "2015",
+            "forbidden": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
+        },
+        {
+            "word": "Interpreter",
+            "forbidden": ["trình", "thông", "dịch"]
+        },
+        {
+            "word": "Event Loop",
+            "forbidden": ["vòng", "lặp", "sự", "kiện"]
+        },
+        {
+            "word": "VueJS"
+        },
+        {
+            "word": "ECMA"
+        }
+    ],
+    "2": [
+        {
+            "word": "IE"
+        }, 
+        {
+            "word": "const"
+        },
+        {
+            "word": "object",
+            "forbidden": ["đối", "tượng"]
+        },
+        {
+            "word": "NodeJS"
+        },
+        {
+            "word": "Netscape"
+        },
+        {
+            "word": "1997",
+            "forbidden": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
+        },
+        {
+            "word": "V8"
+        },
+        {
+            "word": "Queue",
+            "forbidden": ["vòng", "lặp", "sự", "kiện"]
+        },
+        {
+            "word": "Angular"
+        },
+        {
+            "word": "ECMAScript 6"
+        }
+    ]
+}

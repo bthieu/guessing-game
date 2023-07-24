@@ -1,21 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { formatTime } from "../utilities";
-
-const words = [
-  "apple",
-  "banana",
-  "cherry",
-  "date",
-  "elderberry",
-  "fig",
-  "grape",
-  "honeydew",
-  "kiwi",
-  "lemon",
-];
-const forbiddenWords = [["apple1"]];
+import quizzList from "../data/quizz-list.json";
 
 const Playing = ({ onEnd, quizzId }) => {
+  const words = useMemo(() => quizzList[quizzId].map(({word}) => word), [quizzId]);
+  const forbiddenWords = useMemo(() => quizzList[quizzId].map(({forbidden}) => forbidden), [quizzId]);
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
   const [score, setScore] = useState(0);
   const [timeRemaining, setTimeRemaining] = useState(120);
