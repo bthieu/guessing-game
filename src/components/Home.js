@@ -1,6 +1,6 @@
 import React from "react";
 
-const Home = ({ onStart, score }) => {
+const Home = ({ onStart, score, timeLeft }) => {
   return (
     <section className="container">
       <div className="bg-white col-6 mt-5 offset-3 p-5 rounded-5 shadow text-center">
@@ -13,6 +13,7 @@ const Home = ({ onStart, score }) => {
           <div>
             <h1>Score</h1>
             <p className="display-3 fw-bolder">{score}</p>
+            <p>Time Left: {timeLeft}s</p>
             <p>Choose a quizz to start again</p>
           </div>
         )}

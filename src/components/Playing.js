@@ -122,7 +122,7 @@ const Playing = ({ onEnd, quizzId }) => {
   useEffect(() => {
     if (isEnded) {
       clearInterval(timer); // Clear the timer when the game is over
-      onEnd({ score });
+      onEnd({ score, timeLeft: timeRemaining });
     }
   }, [isEnded, timer, score]);
 
