@@ -13,22 +13,29 @@ const words = [
   "kiwi",
   "lemon",
 ];
-const forbiddenWords = [
-  ['apple1'],
-];
+const forbiddenWords = [["apple1"]];
 
-const Playing = ({onEnd, quizzId}) => {
+const Playing = ({ onEnd, quizzId }) => {
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
   const [score, setScore] = useState(0);
-  const [timeRemaining, setTimeRemaining] = useState(20);
+  const [timeRemaining, setTimeRemaining] = useState(120);
   const [guessedWords, setGuessedWords] = useState(
     new Array(words.length).fill(undefined)
   );
   const [timer, setTimer] = useState(null);
-  const [isPaused, setIsPaused] = useState(false);
+  const [isPaused, setIsPaused] = useState(true);
   const [isEnded, setIsEnded] = useState(false);
+  const [isGettingReady, setIsGettingReady] = useState(true);
 
   const handleKeyPress = (event) => {
+    if (isGettingReady) {
+      if (event.key === " ") {
+        setIsGettingReady(false);
+        setIsPaused(false);
+      }
+      return;
+    }
+
     switch (event.key) {
       case "Enter":
         handleGuess(currentWordIndex, true);
@@ -107,8 +114,8 @@ const Playing = ({onEnd, quizzId}) => {
     return status === false
       ? "btn-danger"
       : status
-        ? "btn-success"
-        : "btn-outline-secondary";
+      ? "btn-success"
+      : "btn-outline-secondary";
   };
 
   useEffect(() => {
@@ -128,7 +135,7 @@ const Playing = ({onEnd, quizzId}) => {
   useEffect(() => {
     if (isEnded) {
       clearInterval(timer); // Clear the timer when the game is over
-      onEnd({score});
+      onEnd({ score });
     }
   }, [isEnded, timer, score]);
 
@@ -144,7 +151,7 @@ const Playing = ({onEnd, quizzId}) => {
     return () => {
       window.removeEventListener("keyup", handleKeyPress); // Remove event listener when the component unmounts
     };
-  }, [currentWordIndex]); // Empty dependency array to run only once during component mounting
+  }, [currentWordIndex, isGettingReady]); // Empty dependency array to run only once during component mounting
 
   return (
     <div className="container">
@@ -166,36 +173,45 @@ const Playing = ({onEnd, quizzId}) => {
             </li>
           ))}
         </ul>
-        
+
         <div className="bg-white px-4 py-2 rounded-5 shadow">
-          <span className={`display-6 ${isPaused && 'opacity-25'}`}>{formatTime(timeRemaining)}</span>
+          <span className={`display-6 ${isPaused && "opacity-25"}`}>
+            {formatTime(timeRemaining)}
+          </span>
         </div>
       </header>
 
-
-      <section className="py-5 my-4 rounded-5 shadow bg-white">
-        <div className="py-5 mb-4 mx-auto text-center">
-          <div className="display-1 fw-semibold text-dark-emphasis">
-            {words[currentWordIndex]}
+      {isGettingReady ? (
+        <section className="py-5 my-4 rounded-5 shadow bg-white">
+          <div className="mx-auto my-4 py-5 text-center">
+            <p className="fw-bold py-5">Press space to start</p>
           </div>
-        </div>
-        {
-          forbiddenWords[currentWordIndex] && forbiddenWords[currentWordIndex].length > 0 && (
-            <div className="bg-white col-6 offset-1 p-3">
-              <div className="fs-6 mb-2">FORBIDDEN WORDS</div>
-              <div className="fs-3">
-                {
-                  forbiddenWords[currentWordIndex].map((fbnWord, index) => (
-                    <div key={index} className="badge rounded-pill text-bg-danger me-2">{fbnWord}</div>
-                  ))
-                }
-              </div>
+        </section>
+      ) : (
+        <section className="py-5 my-4 rounded-5 shadow bg-white">
+          <div className="py-5 mb-4 mx-auto text-center">
+            <div className="display-1 fw-semibold text-dark-emphasis">
+              {words[currentWordIndex]}
             </div>
-          )
-        }
-
-      </section>
-      <br/>
+          </div>
+          {forbiddenWords[currentWordIndex] &&
+            forbiddenWords[currentWordIndex].length > 0 && (
+              <div className="bg-white col-6 offset-1 p-3">
+                <div className="fs-6 mb-2">FORBIDDEN WORDS</div>
+                <div className="fs-3">
+                  {forbiddenWords[currentWordIndex].map((fbnWord, index) => (
+                    <div
+                      key={index}
+                      className="badge rounded-pill text-bg-danger me-2"
+                    >
+                      {fbnWord}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+          </section>
+      )}
     </div>
   );
 };
