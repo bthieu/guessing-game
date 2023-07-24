@@ -1,15 +1,10 @@
-import Playing from "./components/Playing";
-import Result from "./components/Result";
+import GuessingGame from "./components/GuessingGame";
 
 const router = [
   {
     path: "/",
-    element: <Playing />,
-  },
-  {
-    path: "/result",
-    element: <Result />,
-  },
+    element: <GuessingGame />,
+  }
 ];
 
 export default router;

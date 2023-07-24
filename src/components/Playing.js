@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import { formatTime } from "../utilities";
 
 const words = [
@@ -18,11 +17,10 @@ const forbiddenWords = [
   ['apple1'],
 ];
 
-const Playing = () => {
-  const navigate = useNavigate();
+const Playing = ({onEnd, quizzId}) => {
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
   const [score, setScore] = useState(0);
-  const [timeRemaining, setTimeRemaining] = useState(120);
+  const [timeRemaining, setTimeRemaining] = useState(20);
   const [guessedWords, setGuessedWords] = useState(
     new Array(words.length).fill(undefined)
   );
@@ -129,10 +127,8 @@ const Playing = () => {
 
   useEffect(() => {
     if (isEnded) {
-      // End of game logic
-      console.log("Game Over");
       clearInterval(timer); // Clear the timer when the game is over
-      navigate("/result", { state: { score } });
+      onEnd({score});
     }
   }, [isEnded, timer, score]);
 
@@ -200,23 +196,6 @@ const Playing = () => {
 
       </section>
       <br/>
-      {/* <section>
-        {/* <div className="card col-6 offset-3 rounded-5 shadow">
-          <div className="card-header">Forbidden words</div>
-          <div className="card-body"></div>
-        </div> *
-        <div className="bg-white col-6 offset-3 p-3 rounded-4 shadow">
-          <div className="fs-6 mb-2">FORBIDDEN WORDS</div>
-          <div className="fs-4">
-
-            <div class="badge rounded-pill text-bg-danger me-2">Danger</div>
-            <div class="badge rounded-pill text-bg-danger me-2">Danger</div>
-            <div class="badge rounded-pill text-bg-danger me-2">Danger</div>
-
-          </div>
-        </div>
-      </section> */}
-
     </div>
   );
 };
