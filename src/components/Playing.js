@@ -25,13 +25,11 @@ const Playing = ({ onEnd, quizzId }) => {
   const [timer, setTimer] = useState(null);
   const [isPaused, setIsPaused] = useState(true);
   const [isEnded, setIsEnded] = useState(false);
-  const [isGettingReady, setIsGettingReady] = useState(true);
-
+  
   const handleKeyPress = (event) => {
-    if (isGettingReady) {
+    if (isPaused) {
       if (event.key === " ") {
-        setIsGettingReady(false);
-        setIsPaused(false);
+        handlePause();
       }
       return;
     }
@@ -151,7 +149,7 @@ const Playing = ({ onEnd, quizzId }) => {
     return () => {
       window.removeEventListener("keyup", handleKeyPress); // Remove event listener when the component unmounts
     };
-  }, [currentWordIndex, isGettingReady]); // Empty dependency array to run only once during component mounting
+  }, [currentWordIndex, isPaused]); // Empty dependency array to run only once during component mounting
 
   return (
     <div className="container">
@@ -181,16 +179,16 @@ const Playing = ({ onEnd, quizzId }) => {
         </div>
       </header>
 
-      {isGettingReady ? (
+      {isPaused ? (
         <section className="py-5 my-4 rounded-5 shadow bg-white">
           <div className="mx-auto my-4 py-5 text-center">
-            <p className="fw-bold py-5">Press space to start</p>
+            <div className="fw-bold py-5">Press space to start</div>
           </div>
         </section>
       ) : (
         <section className="py-5 my-4 rounded-5 shadow bg-white">
-          <div className="py-5 mb-4 mx-auto text-center">
-            <div className="display-1 fw-semibold text-dark-emphasis">
+          <div className="py-5 my-4 mx-auto text-center">
+            <div className="py-3 display-1 fw-semibold text-dark-emphasis">
               {words[currentWordIndex]}
             </div>
           </div>
